@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_30_080425) do
+ActiveRecord::Schema.define(version: 2020_11_30_083322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.string "content"
+    t.string "location"
+    t.date "date"
+    t.time "time"
+    t.string "transportation"
+    t.string "lodging"
+    t.bigint "trip_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["trip_id"], name: "index_activities_on_trip_id"
+    t.index ["user_id"], name: "index_activities_on_user_id"
+  end
+
+  create_table "budgets", force: :cascade do |t|
+    t.integer "amount"
+    t.bigint "user_id", null: false
+    t.bigint "trip_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["trip_id"], name: "index_budgets_on_trip_id"
+    t.index ["user_id"], name: "index_budgets_on_user_id"
+  end
 
   create_table "guests", force: :cascade do |t|
     t.boolean "is_admin"
@@ -41,6 +66,10 @@ ActiveRecord::Schema.define(version: 2020_11_30_080425) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "activities", "trips"
+  add_foreign_key "activities", "users"
+  add_foreign_key "budgets", "trips"
+  add_foreign_key "budgets", "users"
   add_foreign_key "guests", "trips"
   add_foreign_key "guests", "users"
   add_foreign_key "trips", "users"
