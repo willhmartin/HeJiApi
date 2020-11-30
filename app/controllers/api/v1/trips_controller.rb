@@ -3,7 +3,7 @@ class Api::V1::TripsController < Api::V1::BaseController
 skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
 
   def index
-      @trips = Trip.all
+    @trips = Trip.all
   end
 
   def show
@@ -29,6 +29,6 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
 
   private
   def trip_params
-    params.require(:trips).permit(:location, :start_date, :end_date)
+    params.require(:trips).permit(:location, :start_date, :end_date, :user_id)
   end
 end
