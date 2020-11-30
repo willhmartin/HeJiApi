@@ -24,6 +24,6 @@ class Api::V1::PaymentsController < Api::V1::BaseController
 
   private
   def payment_params
-    params.require(:payment).permit(:amount, :category)
+    params.require(:payment).permit(:amount, :category, :content, :trip_id)
   end
 end
