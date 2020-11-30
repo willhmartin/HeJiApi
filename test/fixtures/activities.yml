@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  location: MyString
+  date: 2020-11-30
+  time: 2020-11-30 15:17:34
+  transportation: MyString
+  lodging: MyString
+  trip: one
+  user: one
+
+two:
+  content: MyString
+  location: MyString
+  date: 2020-11-30
+  time: 2020-11-30 15:17:34
+  transportation: MyString
+  lodging: MyString
+  trip: two
+  user: two
