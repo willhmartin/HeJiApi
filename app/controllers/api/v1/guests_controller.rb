@@ -14,7 +14,8 @@ skip_before_action :verify_authenticity_token, only: [:create]
   end
 
   private
+
   def guest_params
-    params.require(:guest).permit(:name)
+    params.require(:guest).permit(:name, :user_id, :trip_id, :is_admin)
   end
 end
