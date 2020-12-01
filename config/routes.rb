@@ -14,7 +14,10 @@ Rails.application.routes.draw do
         resources :activities, only: [ :index, :show, :create, :update, :destroy ]
       end
 
-      resources :guests, only: [ :show, :create ]
+      resources :users, only: [ :show, :create ] do
+        resources :guests, only: [ :index, :show, :create ]
+      end
+
       resources :payments, only: [ :index, :create, :update, :destroy ]
       resources :budgets, only: [ :show, :create, :update, :destroy ]
     end
