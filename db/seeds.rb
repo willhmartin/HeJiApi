@@ -8,10 +8,12 @@
 
 require 'date'
 
+Payment.destroy_all
 Guest.destroy_all
 Activity.destroy_all
 User.destroy_all
 Trip.destroy_all
+Budget.destroy_all
 
 user1 = User.create(name: "Ara" )
 user2 = User.create(name: "Will")
@@ -32,3 +34,9 @@ activity3 = Activity.create(content: "Hiking", location: "Mountain", date: Date.
 guest1 = Guest.create(name: "Aggy", is_admin: false, user: user2, trip: trip2)
 guest2 = Guest.create(name: "Ashkan", is_admin: false, user: user1, trip: trip2)
 guest3 = Guest.create(name: "Arnaud", is_admin: false, user: user3, trip: trip2)
+
+payment1 = Payment.create(amount: 5000, category: "food", content: "group dinner at a beach.", trip: trip1)
+payment2 = Payment.create(amount: 7000, category: "hotel", content: "three day hotel rooms", trip: trip2)
+
+budget1 = Budget.create(amount: 200, trip: trip1)
+budget2 = Budget.create(amount: 600, trip: trip2)
