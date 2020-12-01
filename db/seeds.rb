@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+require 'date'
+
+User.destroy_all
+
+user1 = User.create(name: "Ara" )
+user2 = User.create(name: "Will")
+user3 = User.create(name: "Erica")
+
+
+Trip.destroy_all
+
+trip1 = Trip.create!(title: "Sanya Trip", location: "Sanya", start_date: Date.new, end_date: Date.new)
