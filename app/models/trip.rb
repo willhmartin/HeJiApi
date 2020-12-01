@@ -1,5 +1,5 @@
 class Trip < ApplicationRecord
-  validates :location, :start_date, :end_date, presence: true
+  validates :location, :start_date, :end_date, :user_id, presence: true
 
   belongs_to :user
 

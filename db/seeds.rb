@@ -9,12 +9,14 @@
 require 'date'
 
 User.destroy_all
+Trip.destroy_all
 
 user1 = User.create(name: "Ara" )
 user2 = User.create(name: "Will")
 user3 = User.create(name: "Erica")
 
 
-Trip.destroy_all
 
-trip1 = Trip.create!(title: "Sanya Trip", location: "Sanya", start_date: Date.new, end_date: Date.new)
+
+trip1 = Trip.create!(title: "Sanya Trip", location: "Sanya", start_date: Date.new, end_date: Date.new, user: user1)
+trip2 = Trip.create(title: "New York Trip", location: "New York City", start_date: Date.new, end_date: Date.new, user: user2)
