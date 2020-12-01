@@ -8,6 +8,8 @@
 
 require 'date'
 
+Guest.destroy_all
+Activity.destroy_all
 User.destroy_all
 Trip.destroy_all
 
@@ -16,6 +18,17 @@ user2 = User.create(name: "Will")
 user3 = User.create(name: "Erica")
 
 trip1 = Trip.create!(title: "Sanya Trip", location: "Sanya", start_date: Date.new, end_date: Date.new, user: user1)
+
 trip2 = Trip.create(title: "New York Trip", location: "New York City", start_date: Date.new, end_date: Date.new, user: user2)
 
-activity1 = Activity.create(content: "Go surfing", location: "Beach", date: Date.new, time: Time.now, transportation: "Didi", lodging: "Airbnb", user: user3, trip: trip1)
+trip3 = Trip.create(title: "Patagonia Trip", location: "Chile", start_date: Date.new, end_date: Date.new, user: user3)
+
+activity1 = Activity.create(content: "Go surfing", location: "Beach", date: Date.new, time: Time.now, transportation: "Didi", lodging: "Airbnb", user: user1, trip: trip1)
+
+activity2 = Activity.create(content: "Theatre", location: "Broadway", date: Date.new, time: Time.now, transportation: "Taxi", lodging: "Hotel", user: user2, trip: trip2)
+
+activity3 = Activity.create(content: "Hiking", location: "Mountain", date: Date.new, time: Time.now, transportation: "Llama", lodging: "Cabin", user: user3, trip: trip3)
+
+guest1 = Guest.create(name: "Aggy", is_admin: false, user: user2, trip: trip2)
+guest2 = Guest.create(name: "Ashkan", is_admin: false, user: user1, trip: trip2)
+guest3 = Guest.create(name: "Arnaud", is_admin: false, user: user3, trip: trip2)
