@@ -1,5 +1,5 @@
 class Api::V1::BudgetsController < Api::V1::BaseController
-skip_before_action :verify_authenticity_token, only: [:amount]
+skip_before_action :verify_authenticity_token, only: [:show, :create, :edit, :destory]
 
   def show # access user for their info and related info
     @budget = budget.find(params[:id])
