@@ -1,8 +1,8 @@
 class Api::V1::BudgetsController < Api::V1::BaseController
-skip_before_action :verify_authenticity_token, only: [:show, :create, :edit, :destory]
+skip_before_action :verify_authenticity_token, only: [:show, :create, :update, :destroy]
 
   def show # access user for their info and related info
-    @budget = budget.find(params[:id])
+    @budget = Budget.find(params[:id])
     render json: @budget # ???
   end
 
@@ -12,19 +12,18 @@ skip_before_action :verify_authenticity_token, only: [:show, :create, :edit, :de
     render json: @budget
   end
 
-  def edit
+  def update
     @budget = Budget.find(params[:id])
-    if @budget.update(budget_params)
-      redirect_to @budget
-    else
-      render 'edit'
-    end
+    @budget.update(budget_params)
+    render json: @budget
   end
 
-  def destory
+  def destroy
     @budget = Budget.find(params[:id])
-    @budgets.destory
-    redirect_to @budget
+    @budget.destroy
+    render json: @budget
+
+    # redirect_to @budget
   end
 
 
