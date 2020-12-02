@@ -38,5 +38,8 @@ guest3 = Guest.create(name: "Arnaud", is_admin: false, user: user3, trip: trip2)
 payment1 = Payment.create(amount: 5000, category: "food", content: "group dinner at a beach.", trip: trip1)
 payment2 = Payment.create(amount: 7000, category: "hotel", content: "three day hotel rooms", trip: trip2)
 
-budget1 = Budget.create(amount: 200, trip: trip1)
-budget2 = Budget.create(amount: 600, trip: trip2)
+budget1 = Budget.create(amount: 200, guest: guest1, trip:trip1)
+budget2 = Budget.create(amount: 600, guest: guest2, trip: trip2)
+
+
+

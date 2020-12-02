@@ -10,7 +10,6 @@ Rails.application.routes.draw do
         resources :trips, only: [ :index, :show, :create, :update, :destroy ]
         end
 
-
       resources :trips, only: [ :index, :show, :create, :update, :destroy ] do
         resources :activities, only: [ :index, :show, :create, :update, :destroy ]
       end
@@ -23,6 +22,9 @@ Rails.application.routes.draw do
         resources :payments, only: [:index, :create, :update, :destroy]
       end
 
+       resources :trips, only: [:index, :show, :create, :update, :destroy] do
+        resources :budget, only: [:show, :create, :edit, :destroy]
+      end
     end
   end
 end
