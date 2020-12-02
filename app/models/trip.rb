@@ -3,7 +3,7 @@ class Trip < ApplicationRecord
 
   belongs_to :user
 
-  has_many :activities
+  has_many :activities, dependent: :destroy
   has_many :payments
   has_many :guests
   has_many :budgets
