@@ -9,7 +9,7 @@ skip_before_action :verify_authenticity_token, only: [:create] # ???
   end
 
   def create # instantiate user once they enter miniprogram
-    user = User.new(user_params)
+    @user = User.new(user_params)
     @user.save
     render json: @user
   end
