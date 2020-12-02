@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_092223) do
+ActiveRecord::Schema.define(version: 2020_12_02_024848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,12 +32,11 @@ ActiveRecord::Schema.define(version: 2020_12_01_092223) do
 
   create_table "budgets", force: :cascade do |t|
     t.integer "amount"
-    t.bigint "user_id", null: false
     t.bigint "trip_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "guest_id"
     t.index ["trip_id"], name: "index_budgets_on_trip_id"
-    t.index ["user_id"], name: "index_budgets_on_user_id"
   end
 
   create_table "guests", force: :cascade do |t|
@@ -81,7 +80,6 @@ ActiveRecord::Schema.define(version: 2020_12_01_092223) do
   add_foreign_key "activities", "trips"
   add_foreign_key "activities", "users"
   add_foreign_key "budgets", "trips"
-  add_foreign_key "budgets", "users"
   add_foreign_key "guests", "trips"
   add_foreign_key "guests", "users"
   add_foreign_key "payments", "trips"
