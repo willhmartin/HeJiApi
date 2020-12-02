@@ -1,13 +1,16 @@
 class Api::V1::PaymentsController < Api::V1::BaseController
-
+  skip_before_action :verify_authenticity_token, only: [:index, :create, :update, :destroy]
 
   def index
-    @payment = Payment.all
+    @payments = Payment.where(trip_id:params[:trip_id])
+    render json: @payments
   end
 
   def create
     @payment = Payment.new(payment_params)
+    @payment.trip = Trip.find(params[:trip_id])
     @payment.save
+    render json: @payment
   end
 
   def update
@@ -23,7 +26,9 @@ class Api::V1::PaymentsController < Api::V1::BaseController
   end
 
   private
+
   def payment_params
     params.require(:payment).permit(:amount, :category, :content, :trip_id)
   end
+
 end
