@@ -13,7 +13,7 @@ skip_before_action :verify_authenticity_token, only: [:show, :create, :edit, :de
   end
 
   def edit
-     @budget = Budget.find(params[:id])
+    @budget = Budget.find(params[:id])
     if @budget.update(budget_params)
       redirect_to @budget
     else
