@@ -2,7 +2,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
   skip_before_action :verify_authenticity_token, only: [:index, :create, :update, :destroy]
 
   def index
-    @payments = Payment.where(trip_id:params[:trip_id])
+    @payments = Payment.where(trip_id:params[:trip_id]).reverse
     render json: @payments
   end
 
