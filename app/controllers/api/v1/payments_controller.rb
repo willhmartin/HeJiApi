@@ -3,7 +3,11 @@ class Api::V1::PaymentsController < Api::V1::BaseController
 
   def index
     @payments = Payment.where(trip_id:params[:trip_id]).reverse
-    render json: @payments
+    total_amount = 0
+    @payments.each do |payment|
+      total_amount += payment.amount
+    end
+    render json: { payments: @payments, total_amount: total_amount}
   end
 
   def create
@@ -28,7 +32,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
   private
 
   def payment_params
-    params.require(:payment).permit(:amount, :category, :content, :trip_id)
+    params.require(:payment).permit(:amount, :category, :content, :date, :trip_id)
   end
 
 end
