@@ -11,8 +11,19 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
   end
 
   def show
+   
     @trip = Trip.find(params[:id])
-    render json: @trip
+    weather()
+    # render json: @trip
+    render json: {trip: @trip, activities: @trip.activities, weather: @readable_weather}
+    
+  end
+
+  def weather
+     url = 'https://api.openweathermap.org/data/2.5/forecast?q='
+    api_key = '&appid=1833b3712a66b3e8a38bdf8f99dada0a'
+    @weather = RestClient.get("#{url}London#{api_key}")
+    @readable_weather = JSON.parse(@weather)
   end
 
   def create
