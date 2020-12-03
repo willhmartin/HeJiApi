@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       end
 
        resources :trips, only: [:index, :show, :create, :update, :destroy] do
-        resources :budgets, only: [:show, :create, :update, :destroy]
+        resources :budgets, only: [:index, :show, :create, :update, :destroy]
       end
     end
   end

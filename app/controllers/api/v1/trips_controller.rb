@@ -28,7 +28,7 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
 
   def create
     @trip = Trip.new(trip_params)
-    # @trip.user_id = User.find(params[:user_id])
+    @trip.user = User.find(params[:user_id])
     @trip.save
     render json: @trip
   end
