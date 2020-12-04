@@ -13,7 +13,6 @@ class Api::V1::ActivitiesController < Api::V1::BaseController
     @daily_activities = @activities.where(date: Date.today)
 
 
-
   end
 
 
