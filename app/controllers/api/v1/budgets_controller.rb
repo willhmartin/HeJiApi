@@ -12,8 +12,11 @@ skip_before_action :verify_authenticity_token, only: [:show, :create, :update, :
 
   def create # instantiate user once they enter miniprogram
     @budget = Budget.new(budget_params)
-    @budget.save
-    render json: @budget
+    if @budget.save
+      render json: @budget
+    else
+      render json: @budget.errors.full_messages
+    end
   end
 
   def update
