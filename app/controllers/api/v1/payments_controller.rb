@@ -16,10 +16,26 @@ class Api::V1::PaymentsController < Api::V1::BaseController
   def create
     @payment = Payment.new(payment_params)
     @trip = Trip.find(params[:trip_id])
+
+    unless params[:guest_id] == "none"
+      # find the budget with trip_id and guest_id and deduct payment amount from that budget only
+      guest = Guest.find(params[:guest_id])
+      budget = Budget.find_by(guest_id: guest.id, trip_id: @trip.id)
+      budget.amount = budget.amount - @payment.amount.to_i
+      budget.save
+    else
+      # count how many budgets for this trip, divide by that number, and deduct the result from each buddget
+      people_count = @trip.budgets.length
+      @trip.budgets.each do |budget|
+        budget.amount -= @payment.amount.to_i / people_count
+        budget.save
+      end
+    end
+
     @payment.trip = @trip
     # no_of_guests = Guest.where(trip: @trip)
     @payment.save
-    render json: @payment
+    # render json: @payment
   end
 
   def update
@@ -37,7 +53,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
   private
 
   def payment_params
-    params.require(:payment).permit(:amount, :category, :content, :date, :trip_id)
+    params.require(:payment).permit(:amount, :split, :category, :content, :date, :trip_id)
   end
 
 end
