@@ -5,18 +5,17 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
   def index
 
     @trips = Trip.where(user_id: params[:user_id])
-
     # @trips = Trip.all
     render json: @trips
   end
 
   def show
-   
     @trip = Trip.find(params[:id])
-    weather()
+    weather
+    @activities = @trip.activities.order(:date)
     # render json: @trip
-    render json: {trip: @trip, activities: @trip.activities, weather: @readable_weather}
-    
+    render json: {trip: @trip, activities: @trip.activities.order(:date), weather: @readable_weather}
+
   end
 
   def weather

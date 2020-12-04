@@ -7,6 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 require 'date'
+tomorrow = Date.today + 1
+dayafter = Date.today + 2
 Budget.destroy_all
 Payment.destroy_all
 Guest.destroy_all
@@ -25,7 +27,7 @@ trip2 = Trip.create(title: "New York Trip", location: "New York City", start_dat
 
 trip3 = Trip.create(title: "Patagonia Trip", location: "Chile", start_date: Date.today, end_date: Date.today, user: user3)
 
-activity1 = Activity.create(content: "Go surfing", location: "Beach", date: Date.today, time: Time.now, transportation: "Didi", lodging: "Airbnb", user: user1, trip: trip1)
+activity1 = Activity.create(content: "Go surfing", location: "Beach", date: dayafter, time: Time.now, transportation: "Didi", lodging: "Airbnb", user: user1, trip: trip1)
 
 activity2 = Activity.create(content: "Theatre", location: "Broadway", date: Date.today, time: Time.now, transportation: "Taxi", lodging: "Hotel", user: user2, trip: trip2)
 
@@ -37,7 +39,7 @@ activity5 = Activity.create(content: "Wine tasting", location: "Vineyard", date:
 
 activity6 = Activity.create(content: "Volunteering", location: "Hospital", date: Date.today, time: Time.now, transportation: "Ambulance", lodging: "Ward", user: user3, trip: trip1)
 
-activity7 = Activity.create(content: "Opera", location: "Opera house", date: Date.today, time: Time.now, transportation: "Bus", lodging: "Hotel", user: user3, trip: trip1)
+activity7 = Activity.create(content: "Opera", location: "Opera house", date: tomorrow, time: Time.now, transportation: "Bus", lodging: "Hotel", user: user3, trip: trip1)
 
 guest1 = Guest.create(name: "Aggy", is_admin: false, user: user2, trip: trip2)
 guest2 = Guest.create(name: "Ashkan", is_admin: false, user: user1, trip: trip2)
