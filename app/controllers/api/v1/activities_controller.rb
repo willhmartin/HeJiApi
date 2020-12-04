@@ -12,6 +12,7 @@ class Api::V1::ActivitiesController < Api::V1::BaseController
     @activities = Activity.where(trip_id: params[:trip_id])
     @daily_activities = @activities.where(date: Date.today)
     
+    
 
   end
 
