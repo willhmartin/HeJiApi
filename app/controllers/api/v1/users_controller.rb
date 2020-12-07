@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::V1::BaseController
 
-skip_before_action :verify_authenticity_token, only: [:create] # ???
+skip_before_action :verify_authenticity_token, only: [:create, :update] # ???
 
   def show # access user for their info and related info
     @user = User.find(params[:id])
@@ -11,6 +11,12 @@ skip_before_action :verify_authenticity_token, only: [:create] # ???
   def create # instantiate user once they enter miniprogram
     @user = User.new(user_params)
     @user.save
+    render json: @user
+  end
+
+  def update
+    @user = User.find(params[:id])
+    @user.update(user_params)
     render json: @user
   end
 
