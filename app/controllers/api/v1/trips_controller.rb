@@ -20,9 +20,10 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
   # api.openweathermap.org/data/2.5/forecast/daily?q={city name}&cnt={cnt}&appid={API key}
 
   def weather
+    @location = @trip.location
      url = 'api.openweathermap.org/data/2.5/forecast?q='
     api_key = '&appid=1833b3712a66b3e8a38bdf8f99dada0a'
-    @weather = RestClient.get("#{url}London#{api_key}")
+    @weather = RestClient.get("#{url}#{@location}#{api_key}")
     @readable_weather = JSON.parse(@weather)
   end
 
