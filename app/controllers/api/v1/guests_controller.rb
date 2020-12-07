@@ -13,14 +13,15 @@ skip_before_action :verify_authenticity_token, only: [:create]
   end
 
   def create
+    @user = User.find(params[:user_id])
     @guest = Guest.new(guest_params)
-    @guest.save
+    @guest.save!
     render json: @guest
   end
 
   private
 
   def guest_params
-    params.require(:guest).permit(:name, :user_id, :trip_id, :is_admin)
+    params.require(:guest).permit(:name, :user_id, :trip_id)
   end
 end
