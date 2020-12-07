@@ -11,16 +11,26 @@ URL = "https://api.weixin.qq.com/sns/jscode2session".freeze
       grant_type: "authorization_code"
     }
     @wechat_response ||= RestClient.get(URL, params: @wechat_params)
-    @wechat_user ||= JSON.parse(@wechat_response.body)
-
+    wechat_res_body ||= JSON.parse(@wechat_response.body)
   end
 
   def login
-    @user = User.find_or_create_by!(open_id: wechat_user.fetch("openid"), name: "placeholder")
-    p "testing to see if user can be found"
-    render json: {
-      userId: @user.id
-    }
+    res_from_wechat = wechat_user
+    p " testing"
+
+    if res_from_wechat["openid"].present?
+      openid = res_from_wechat.fetch("openid")
+      @user = User.find_by(open_id: openid)
+      unless @user.present?
+        @user = User.new(open_id: openid, name: "placeholder")
+        @user.save!
+      end
+      render json: {
+        userId: @user.id
+      }
+    else 
+      render json: wechat_user
+    end
   end
 
 end
