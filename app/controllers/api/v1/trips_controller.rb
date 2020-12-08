@@ -34,8 +34,8 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
   def create
     @trip = Trip.new(trip_params)
     @trip.user = User.find(params[:user_id])
-    @guest = Guest.new(trip: @trip, user: @trip.user)
-    @trip.save
+    @trip.save!
+    @guest = Guest.new(trip: @trip, user: @trip.user, name: @user.name, is_admin: true)
     render json: @trip
   end
 
