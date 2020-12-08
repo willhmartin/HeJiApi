@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
 
-      
-    
+
+
 
       resources :users, only: [ :show, :create, :update ] do
         resources :trips, only: [ :index, :show, :create, :update, :destroy ]
@@ -26,7 +26,8 @@ Rails.application.routes.draw do
       end
 
        resources :trips, only: [:index, :show, :create, :update, :destroy] do
-        resources :budgets, only: [:index, :show, :create, :update, :destroy]
+        resources :budgets, only: [:index, :create, :update, :destroy]
+        get "/my_budget", to: "budgets#show"
       end
     end
   end

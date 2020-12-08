@@ -6,8 +6,15 @@ skip_before_action :verify_authenticity_token, only: [:show, :create, :update, :
     p params
   end
   def show # access user for their info and related info
-    @budget = Budget.find(params[:id])
-    render json: @budget # ???
+    p 'showing one budget'
+    budgets = Budget.where(guest_id: params[:guest_id], trip_id: params[:trip_id])
+    if budgets.empty?
+      render json: {budget: false}
+    else
+      render json: {budget: budgets.first, payments: budgets.first.payments}
+    end
+    # @budget = Budget.find(params[:id])
+    # render json: @budget # ???
   end
 
   def create # instantiate user once they enter miniprogram
