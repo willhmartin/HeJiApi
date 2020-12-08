@@ -2,6 +2,7 @@ class Trip < ApplicationRecord
   validates :location, :start_date, :end_date, :user_id, presence: true
 
   belongs_to :user
+  # has_many :users, through: :guests
 
   has_many :activities, dependent: :destroy
   has_many :payments
