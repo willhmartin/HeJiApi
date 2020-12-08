@@ -14,7 +14,7 @@ skip_before_action :verify_authenticity_token, only: [:create]
 
   def create
     @guest = Guest.new(guest_params)
-    @guest.save
+    @guest.save!
     render json: @guest
   end
 
