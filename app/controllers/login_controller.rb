@@ -26,7 +26,8 @@ URL = "https://api.weixin.qq.com/sns/jscode2session".freeze
         @user.save!
       end
       render json: {
-        userId: @user.id
+        userId: @user.id,
+        trips: @user.trips
       }
     else 
       render json: wechat_user
