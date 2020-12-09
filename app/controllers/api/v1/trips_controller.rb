@@ -25,7 +25,11 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
     #render json: {trip: @trip, activities: @trip.activities.order(:date), weather: @readable_weather, is_guest: is_guest, guest_id: guest_id}
 
     activities = @trip.activities.order(:date)
-    render json: {trip: @trip, is_guest: is_guest, activities: activities}
+    if is_guest
+      render json: {trip: @trip, is_guest: is_guest, activities: activities, guest_id: Guest.where(user: @user, trip: @trip).first.id}
+    else
+      render json: {trip: @trip, is_guest: is_guest, activities: activities}
+    end
 
     
   end
