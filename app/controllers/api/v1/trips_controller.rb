@@ -12,7 +12,7 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
   def show
     @trip = Trip.find(params[:id])
     @user = User.find(params[:user_id])
-    
+
 
     p "testing show page"
     p Guest.where(user: @user, trip: @trip).length >= 1
@@ -31,7 +31,7 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
       render json: {trip: @trip, is_guest: is_guest, activities: activities}
     end
 
-    
+
   end
   # api.openweathermap.org/data/2.5/forecast/daily?q={city name}&cnt={cnt}&appid={API key}
 
@@ -49,6 +49,7 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
     @trip.user = User.find(params[:user_id])
     @trip.save!
     @guest = Guest.new(trip: @trip, user: @trip.user, name: @trip.user.name, is_admin: true)
+    @guest.save!
     render json: @trip
   end
 
