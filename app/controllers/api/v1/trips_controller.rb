@@ -14,6 +14,7 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
     @user = User.find(params[:user_id])
     is_guest = Guest.where(user: @user, trip: @trip).length >= 1
     guest_id = is_guest ? Guest.where(user: @user, trip: @trip).first.id : "not a guest"
+
     # weather
     # @activities = @trip.activities.order(:date)
     # render json: @trip
@@ -28,7 +29,7 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
       format_activities << temphash
     end
     if is_guest
-      render json: {trip: @trip, is_guest: is_guest, activities: format_activities, guest_id: Guest.where(user: @user, trip: @trip).first.id}
+      render json: {trip: @trip, is_guest: is_guest, activities: format_activities, weather: @weather_results, guest_id: Guest.where(user: @user, trip: @trip).first.id}
     else
       render json: {trip: @trip, is_guest: is_guest, activities: format_activities}
     end
@@ -43,7 +44,15 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
     api_key = '&appid=1833b3712a66b3e8a38bdf8f99dada0a'
     @weather = RestClient.get("#{url}#{@location}#{api_key}")
     @readable_weather = JSON.parse(@weather)
-    return @readable_weather
+    @weather_results = []
+    @readable_weather.fetch("list").each_with_index do |item, index|
+      if index % 8 == 0 || index == 0
+        p index
+        @weather_results << item
+      end
+    end
+ 
+    return @weather_results
   end
 
   def create
