@@ -25,7 +25,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
       budget.save
     else
       # count how many budgets for this trip, divide by that number, and deduct the result from each buddget
-      people_count = @trip.budgets.length
+      people_count = @trip.guests.length
       @trip.budgets.each do |budget|
         budget.amount -= @payment.amount.to_i / people_count
         budget.save
