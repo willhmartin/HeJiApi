@@ -3,8 +3,7 @@ class Api::V1::TripsController < Api::V1::BaseController
 skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy, :weather]
 
   def index
-
-    @trips = Trip.where(user_id: params[:user_id])
+    @trips = User.find(params[:user_id]).trips
     # @trips = Trip.all
     render json: @trips
   end
@@ -26,7 +25,7 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
 
     activities = @trip.activities.order(:date)
     if is_guest
-      render json: {trip: @trip, is_guest: is_guest, activities: activities, weather: @weather_results, guest_id: Guest.where(user: @user, trip: @trip).first.id}
+      render json: {trip: @trip, is_guest: is_guest, activities: activities, weather: @weather_results, guest_id: Guest.where(user: @user, trip: @trip).first.id, from_today: (@trip.start_date - Time.now.to_date).to_i }
     else
       render json: {trip: @trip, is_guest: is_guest, activities: activities}
     end
@@ -54,9 +53,9 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
 
   def create
     @trip = Trip.new(trip_params)
-    @trip.user = User.find(params[:user_id])
+    @user = User.find(params[:user_id])
     @trip.save!
-    @guest = Guest.new(trip: @trip, user: @trip.user, name: @trip.user.name, is_admin: true)
+    @guest = Guest.new(trip: @trip, user: @user, name: @user.name, is_admin: true)
     @guest.save!
     render json: @trip
   end
@@ -75,6 +74,6 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
 
   # private
   def trip_params
-    params.require(:trip).permit( :title, :location, :start_date, :end_date, :user_id)
+    params.require(:trip).permit( :title, :location, :start_date, :user_id, :end_date)
   end
 end
