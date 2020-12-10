@@ -12,23 +12,25 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
   def show
     @trip = Trip.find(params[:id])
     @user = User.find(params[:user_id])
-
-
-    p "testing show page"
-    p Guest.where(user: @user, trip: @trip).length >= 1
     is_guest = Guest.where(user: @user, trip: @trip).length >= 1
     guest_id = is_guest ? Guest.where(user: @user, trip: @trip).first.id : "not a guest"
-
     # weather
     # @activities = @trip.activities.order(:date)
     # render json: @trip
     #render json: {trip: @trip, activities: @trip.activities.order(:date), weather: @readable_weather, is_guest: is_guest, guest_id: guest_id}
-
+    format_activities = []
     activities = @trip.activities.order(:date)
+    activities.each do |activity|
+      temphash = {}
+      temphash[:content] = activity.content
+      temphash[:location] = activity.location
+      temphash[:time] = activity.time.strftime("%R")
+      format_activities << temphash
+    end
     if is_guest
-      render json: {trip: @trip, is_guest: is_guest, activities: activities, guest_id: Guest.where(user: @user, trip: @trip).first.id}
+      render json: {trip: @trip, is_guest: is_guest, activities: format_activities, guest_id: Guest.where(user: @user, trip: @trip).first.id}
     else
-      render json: {trip: @trip, is_guest: is_guest, activities: activities}
+      render json: {trip: @trip, is_guest: is_guest, activities: format_activities}
     end
 
 

@@ -8,11 +8,8 @@ class Api::V1::ActivitiesController < Api::V1::BaseController
    skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
 
   def index
-
     @activities = Activity.where(trip_id: params[:trip_id])
     @daily_activities = @activities.where(date: Date.today)
-
-
   end
 
   def show
