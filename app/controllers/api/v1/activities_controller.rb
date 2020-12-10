@@ -23,7 +23,7 @@ class Api::V1::ActivitiesController < Api::V1::BaseController
   def create
     @activity = Activity.new(activity_params)
     @activity.trip = Trip.find(params[:trip_id])
-    @activity.time = Time.now
+    @activity.time = @activity.time.strftime("%I:%M%p")
     @activity.save!
     render json: @activity
     # if @activity.save
