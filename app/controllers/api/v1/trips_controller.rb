@@ -29,7 +29,7 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
     end
     if is_guest
 #       render json: {trip: @trip, is_guest: is_guest, activities: format_activities, weather: @weather_results, guest_id: Guest.where(user: @user, trip: @trip).first.id}
-      render json: {trip: @trip, is_guest: is_guest, activities: activities, weather: @weather_results, guest_id: Guest.where(user: @user, trip: @trip).first.id, from_today: (@trip.start_date - Time.now.to_date).to_i }
+      render json: {trip: @trip, is_guest: is_guest, activities: format_activities, weather: @weather_results, guest_id: Guest.where(user: @user, trip: @trip).first.id, from_today: (@trip.start_date - Time.now.to_date).to_i }
 
     else
       render json: {trip: @trip, is_guest: is_guest, activities: format_activities}
