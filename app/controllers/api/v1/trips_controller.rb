@@ -52,17 +52,22 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
         @weather_results << item
       end
     end
- 
+
     return @weather_results
   end
 
   def create
     @trip = Trip.new(trip_params)
-    @user = User.find(params[:user_id])
-    @trip.save!
-    @guest = Guest.new(trip: @trip, user: @user, name: @user.name, is_admin: true)
-    @guest.save!
-    render json: @trip
+    checking_res = content_check(@trip.title, @trip.location)
+    if checking_res == 0
+      @user = User.find(params[:user_id])
+      @trip.save!
+      @guest = Guest.new(trip: @trip, user: @user, name: @user.name, is_admin: true)
+      @guest.save!
+      render json: @trip
+    else
+      render json: { error: "content not ok"}
+    end
   end
 
   def update

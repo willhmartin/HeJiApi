@@ -20,14 +20,14 @@ class Api::V1::ActivitiesController < Api::V1::BaseController
   def create
     @activity = Activity.new(activity_params)
     @activity.trip = Trip.find(params[:trip_id])
-    @activity.time = @activity.time.strftime("%I:%M%p")
-    @activity.save!
-    render json: @activity
-    # if @activity.save
-    #   redirect_to @activity
-    # else
-    #   render 'new'
-    # end
+    checking_res = content_check(@activity.content, @activity.location, @activity.transportation, @activity.lodging)
+    if checking_res == 0
+      @activity.time = @activity.time.strftime("%I:%M%p")
+      @activity.save!
+      render json: @activity
+    else
+      render json: { error: "content not ok"}
+    end
   end
 
   def update
