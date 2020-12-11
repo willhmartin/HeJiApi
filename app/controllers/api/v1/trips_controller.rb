@@ -22,6 +22,7 @@ skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy
     activities = @trip.activities.order(:date)
     activities.each do |activity|
       temphash = {}
+      temphash[:date] = activity.date
       temphash[:content] = activity.content
       temphash[:location] = activity.location
       temphash[:time] = activity.time.strftime("%R")
