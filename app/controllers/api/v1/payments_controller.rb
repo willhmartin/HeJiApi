@@ -15,7 +15,9 @@ class Api::V1::PaymentsController < Api::V1::BaseController
 
   def create
     @payment = Payment.new(payment_params)
-      checking_res = content_check(@payment.note, @payment.category)
+    p "eraewr"
+    p @payment
+      checking_res = content_check(@payment.content, @payment.category)
     if checking_res == 0
       @trip = Trip.find(params[:trip_id])
 
@@ -37,7 +39,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
       @payment.trip = @trip
       # no_of_guests = Guest.where(trip: @trip)
       @payment.save
-      # render json: @payment
+      render json: @payment
     #   @activity.time = @activity.time.strftime("%I:%M%p")
     #   @activity.save!
     #   render json: @activity
