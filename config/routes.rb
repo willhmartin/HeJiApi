@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
 
 
-
+      get 'weather', to: 'trips#weathernew'
       resources :users, only: [ :show, :create, :update ] do
         resources :trips, only: [ :index, :show, :create, :update, :destroy ]
         end
