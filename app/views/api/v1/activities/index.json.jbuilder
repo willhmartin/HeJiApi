@@ -2,7 +2,7 @@ json.array! @daily_activities do |activity|
 
   json.extract! activity, :id, :content, :location, :date, :transportation
   json.time_only activity.time.strftime("%R")
-
+end
   # json.time_only activity.time.strftime("%I:%M%p")
 
 
